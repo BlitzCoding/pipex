@@ -32,5 +32,6 @@ int main(int argc, char **argv)
 		int y;
 		read(fd[0], &y, sizeof(int));
 		printf("read : %d\n", y);
+		close(fd[0]);
 	}
 }
