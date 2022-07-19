@@ -1,6 +1,9 @@
 #include <stdio.h>
 
-int main()
+int main(int ac, char **argv, char **envp)
 {
-	printf("%d\n", 3<<2);
+	for (int i = 0; i < 80; i++)
+	{
+		printf("<%d> : %s\n", i, envp[i]);
+	}
 }

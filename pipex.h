@@ -6,7 +6,7 @@
 /*   By: yonghlee <yonghlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 11:31:00 by yonghlee          #+#    #+#             */
-/*   Updated: 2022/07/18 13:42:30 by yonghlee         ###   ########.fr       */
+/*   Updated: 2022/07/19 12:07:52 by yonghlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,12 @@
 
 typedef struct s_pipex
 {
-	int		infile;
-	int 	outfile;
+	char	*infile;
+	char 	*outfile;
 	char	**path;
 }	 t_pipex;
+
+#include "libft/libft.h"
 
 # include <stdio.h>  //tmp;
 # include <stdlib.h>

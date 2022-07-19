@@ -1,32 +1,13 @@
 #include <stdio.h>
 #include <unistd.h>
-#include <errno.h>
-#include <string.h>
-#include <stdlib.h>
 
-extern char **environ;
-
-int main(int argc, char **argv)
+int main()
 {
-	char **new_argv;
-	char command[] = "ls";
-	int idx;
+   char *argv[]   = { "./show_envp", "HTTP", NULL};
+   char *envp[]   = { "HTTP=FORUM.FALINUX.COM", NULL};
 
-	new_argv = (char **)malloc(sizeof(char *) * (argc + 1));
+   execve( "./show_envp", argv, envp);
 
-	new_argv[0] = command;
-
-	for (idx = 1; idx < argc; idx++)
-		new_argv[idx] = argv[idx];
-
-	new_argv[idx] = NULL;
-	if (execve("/bin/cat", new_argv, environ) == -1)
-	{
-		fprintf(stderr, "progmaer excve errr : %s\n", strerror(errno));
-		return 1;
-	}
-
-
-	printf("nono");
-	return 0;
+   printf( "이 메시지가 보이면 지정된 프로그램이 \
+없거나 어떤 문제로 실행되지 못한 것입니다.\n");
 }
