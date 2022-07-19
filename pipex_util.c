@@ -6,7 +6,7 @@
 /*   By: yonghlee <yonghlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 11:35:01 by yonghlee          #+#    #+#             */
-/*   Updated: 2022/07/18 13:01:07 by yonghlee         ###   ########.fr       */
+/*   Updated: 2022/07/19 14:56:53 by yonghlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ void	print_error(int status)
 	else if (status == OPEN_FAIL)
 	{
 		ft_putstr_fd("Error : Open Fail", 1);
+		exit(0);
+	}
+	else if (status == PARSE_FAIL)
+	{
+		ft_putstr_fd("Error : Parse Fail", 1);
 		exit(0);
 	}
 }
