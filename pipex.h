@@ -6,7 +6,7 @@
 /*   By: yonghlee <yonghlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 11:31:00 by yonghlee          #+#    #+#             */
-/*   Updated: 2022/07/19 16:13:55 by yonghlee         ###   ########.fr       */
+/*   Updated: 2022/07/20 11:49:59 by yonghlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define INPUT_FAIL		0
 # define OPEN_FAIL		1
 # define PARSE_FAIL		2
+# define PIPE_FAIL		3
 
 #include "libft/libft.h"
 
@@ -29,16 +30,16 @@
 
 typedef struct s_pipex
 {
-	char	*infile;
-	char 	*outfile;
+	int		cmd_num;
+	int		pipe_num;
+	int		fd1;
+	int		fd2;
+	int		*pipe;
 	char	**path;
-	char	***path_cmd;
+	char	***argv_cmd;
 	bool	is_here;	// here_dox 임시;
 }	 t_pipex;
 
-
-
 void	print_error(int status);
-void	ft_putstr_fd(char *s, int fd);
 
 #endif

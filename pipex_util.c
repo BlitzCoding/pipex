@@ -6,20 +6,11 @@
 /*   By: yonghlee <yonghlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 11:35:01 by yonghlee          #+#    #+#             */
-/*   Updated: 2022/07/19 14:56:53 by yonghlee         ###   ########.fr       */
+/*   Updated: 2022/07/20 11:50:17 by yonghlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	ft_putstr_fd(char *s, int fd)
-{
-	while (*s)
-	{
-		write (fd, &(*s), 1);
-		s++;
-	}
-}
 
 void	print_error(int status)
 {
@@ -36,6 +27,11 @@ void	print_error(int status)
 	else if (status == PARSE_FAIL)
 	{
 		ft_putstr_fd("Error : Parse Fail", 1);
+		exit(0);
+	}
+	else if (status == PIPE_FAIL)
+	{
+		ft_putstr_fd("Error : Pipe Fail", 1);
 		exit(0);
 	}
 }
