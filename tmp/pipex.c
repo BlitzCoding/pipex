@@ -155,7 +155,7 @@ void	ft_make_pipex(int argc, char **argv, char **envp, t_pipex *pipex)
 	if (pipex->fd1 < 0)
 		error();
 	pipex->fd2 = open(argv[argc - 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (pipex->fd1 < 0)
+	if (pipex->fd2 < 0)
 		error();
 	ft_make_paths(envp, pipex);
 	ft_make_newarvs(argv, pipex);
