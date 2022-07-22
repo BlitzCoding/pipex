@@ -6,7 +6,7 @@
 #    By: yonghlee <yonghlee@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/18 15:22:06 by yonghlee          #+#    #+#              #
-#    Updated: 2022/07/22 13:20:17 by yonghlee         ###   ########.fr        #
+#    Updated: 2022/07/22 14:13:00 by yonghlee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ $(OBJ_MKDIR):
 $(NAME) : $(OBJS)
 	make all -C $(LIBFT)
 	mv libft/libft.a ./$(OBJ_DIR)
-	$(CC) $(CFLAG) $^ $(OBJ_DIR)libft.a -o $@ -fsanitize=address
+	$(CC) $(CFLAG) $^ $(OBJ_DIR)libft.a -o $@ -g3 -fsanitize=address
 
 $(OBJ_DIR)%.o : %.c | $(OBJ_MKDIR)
 	$(CC) $(CFLAGS) -c $^ -I./ -o $@

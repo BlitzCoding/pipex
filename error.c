@@ -6,7 +6,7 @@
 /*   By: yonghlee <yonghlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 11:35:01 by yonghlee          #+#    #+#             */
-/*   Updated: 2022/07/22 12:30:21 by yonghlee         ###   ########.fr       */
+/*   Updated: 2022/07/22 14:18:23 by yonghlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,12 @@
 
 void	free_all(t_pipex *pipex)
 {
-	return ;
+	if (pipex->envp_parse)
+		free(pipex->envp_parse);
+	if (pipex->infile)
+		free(pipex->infile);
+	if (pipex->outfile)
+		free(pipex->outfile);
 }
 
 void	print_error(int status, t_pipex *pipex)
