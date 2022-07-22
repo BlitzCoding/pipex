@@ -51,6 +51,7 @@ int	ft_find_path(int cmd_i, t_pipex *pipex)
 	{
 		path = ft_strjoin(pipex->paths[j], "/");
 		fpath = ft_strjoin(path, pipex->newargvs[cmd_i][0]);
+		printf("%s\n", fpath);
 		free(path);
 		if (access(fpath, 0) == 0)
 		{

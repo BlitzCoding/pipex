@@ -6,7 +6,7 @@
 /*   By: yonghlee <yonghlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 11:31:00 by yonghlee          #+#    #+#             */
-/*   Updated: 2022/07/20 15:28:39 by yonghlee         ###   ########.fr       */
+/*   Updated: 2022/07/22 13:21:04 by yonghlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # define PIPE_FAIL		3
 # define FORK_FAIL		4
 # define MALLOC_FAIL	5
+# define EXEC_FAIL		6
 
 #include "libft/libft.h"
 
@@ -28,21 +29,23 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <sys/wait.h>
-# include <stdbool.h>
+
+typedef struct s_cmd
+{
+	char	**av_cmd1;
+	char	**av_cmd2;
+	char	*parse_cmd1;
+	char	*parse_cmd2;
+}	t_cmd;
 
 typedef struct s_pipex
 {
-	int		cmd_num;
-	int		pipe_num;
-	int		fd1;
-	int		fd2;
-	int		**pipe;
-	char	**path;
-	char	*exec_path;
-	char	***argv_cmd;
-	bool	is_here;	// here_dox 임시;
+	char	*infile;
+	char	*outfile;
+	char	**envp_parse;
+	t_cmd	cmd;
 }	 t_pipex;
 
-void	print_error(int status);
+void	print_error(int status, t_pipex *pipex);
 
 #endif

@@ -1,1 +1,7 @@
-       9
+/usr/local/bin//usr/bin/wc
+/usr/bin//usr/bin/wc
+/bin//usr/bin/wc
+/usr/sbin//usr/bin/wc
+/sbin//usr/bin/wc
+/usr/local/munki//usr/bin/wc
+      12

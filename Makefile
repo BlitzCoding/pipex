@@ -6,7 +6,7 @@
 #    By: yonghlee <yonghlee@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/18 15:22:06 by yonghlee          #+#    #+#              #
-#    Updated: 2022/07/20 15:53:08 by yonghlee         ###   ########.fr        #
+#    Updated: 2022/07/22 13:20:17 by yonghlee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ NAME		= pipex
 LIBFT		= libft
 
 SRC			= main			\
-				pipex_util	\
+				error	\
 
 SRCS		= $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC)))
 OBJS		= $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC)))

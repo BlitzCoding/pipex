@@ -6,107 +6,70 @@
 /*   By: yonghlee <yonghlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 11:31:06 by yonghlee          #+#    #+#             */
-/*   Updated: 2022/07/20 15:52:55 by yonghlee         ###   ########.fr       */
+/*   Updated: 2022/07/22 13:42:10 by yonghlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	make_path(size_t idx, t_pipex *pipex)
+char	*attach_path_cmd(char *cmd, t_pipex *pipex)
 {
-	size_t	path_idx;
+	size_t	i;
+	char	*path_cmd;
+	char	*res_cmd;
+	int		fd;
 
-	path_idx = -1;
-	while (pipex->path[++path_idx])
-	{
-		pipex->exec_path = ft_strjoin(pipex->path[path_idx], "/");
-		printf("good : %s\n", pipex->exec_path);
-		free(pipex->exec_path);
-	}
-}
-
-void	set_pipe(t_pipex *pipex)
-{
-	int	i;
-	int	pipe_res;
-
-	pipex->pipe = malloc(sizeof(int *) * pipex->pipe_num);
 	i = 0;
-	while (i < pipex->pipe_num)
+	path_cmd = ft_strjoin("/", cmd);
+	while (pipex->envp_parse[i])
 	{
-		pipex->pipe[i] = malloc(sizeof(int) * 2);
-		if (!pipex->pipe[i])
-			print_error(MALLOC_FAIL);
-		pipe_res = pipe(pipex->pipe[i]);
-		if (pipe_res == -1)
-			print_error(PIPE_FAIL);
+		res_cmd = ft_strjoin(pipex->envp_parse[i], path_cmd);
+		printf("%s\n", res_cmd);
 		i++;
 	}
+	return (res_cmd);
 }
 
-void	find_path(char **envp, t_pipex *pipex)
+void	argv_parse(t_pipex *pipex, char **argv)
 {
-	int	i;
-
-	i = -1;
-	while (envp[++i])
-	{
-		if (!ft_strncmp(envp[i], "PATH=", 5))
-			break;
-	}
-	if (!envp[i])
-		print_error(PARSE_FAIL);
-	envp[i] = &envp[i][5];
-	pipex->path = ft_split(envp[i], ':');
+	pipex->cmd.av_cmd1 = ft_split(argv[2], ' ');
+	if (pipex->cmd.av_cmd1 == NULL)
+		print_error(PARSE_FAIL, pipex);
+	pipex->cmd.av_cmd2 = ft_split(argv[3], ' ');
+	if (pipex->cmd.av_cmd2 == NULL)
+		print_error(PARSE_FAIL, pipex);
+	pipex->cmd.parse_cmd1 = attach_path_cmd(pipex->cmd.av_cmd1[0], pipex);
+	pipex->cmd.parse_cmd2 = attach_path_cmd(pipex->cmd.av_cmd2[0], pipex);
 }
 
-void	parse_argv_cmd(char **argv, t_pipex *pipex)
+// PATH= 환경변수에서 명령어를 가져올수있게 파싱작업
+void	envp_parse(t_pipex *pipex, char **envp)
 {
 	int	i;
 
 	i = 0;
-	pipex->argv_cmd = malloc(sizeof(char **) * pipex->cmd_num);
-	if (!pipex->argv_cmd)
-		print_error(MALLOC_FAIL);
-	while (i < pipex->cmd_num)
-	{
-		pipex->argv_cmd[i] = ft_split(argv[i + 2], ' ');
+	while (ft_strncmp(envp[i], "PATH=", 5))
 		i++;
-	}
+	if (envp[i] == NULL)
+		print_error(PARSE_FAIL, pipex);
+	pipex->envp_parse = ft_split(&envp[i][5], ':');
 }
 
-void	init_pipex(int argc, char **argv, char **envp, t_pipex *pipex)
+void	init_pipex(t_pipex *pipex, char **argv, char **envp)
 {
-	pipex->is_here = false; // 나중에
-	if (argc < 5)
-		print_error(INPUT_FAIL);
-	pipex->cmd_num = argc - 3;
-	pipex->pipe_num = pipex->cmd_num - 1;
-	pipex->fd1 = open(argv[1], O_RDONLY);
-	if (pipex->fd1 < 0)
-		print_error(OPEN_FAIL);
-	pipex->fd2 = open(argv[argc - 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (pipex->fd2 < 0)
-		print_error(OPEN_FAIL);
-	find_path(envp, pipex);
-	parse_argv_cmd(argv, pipex);
-	set_pipe(pipex);
+	pipex->infile = ft_strdup(argv[1]);
+	pipex->outfile = ft_strdup(argv[4]);
+	if (pipex->infile == NULL || pipex->outfile == NULL)
+		print_error(PARSE_FAIL, pipex);
+	envp_parse(pipex, envp);
+	argv_parse(pipex, argv);
 }
-
-
 
 int main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
-	int	idx;
 
-	init_pipex(argc, argv, envp, &pipex);
-	idx = 0;
-	while (idx < pipex.cmd_num)
-	{
-		make_path(idx, &pipex);
-		idx++;
-	}
-
-	system("leaks pipex");
+	if (argc != 5)
+		print_error(INPUT_FAIL, &pipex);
+	init_pipex(&pipex, argv, envp);
 }
